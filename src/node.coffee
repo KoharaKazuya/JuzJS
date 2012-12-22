@@ -2,6 +2,8 @@ class Node
 
     constructor: (canvas)->
         canvas.drawArc({
+            layer: true
+            fillStyle: "black"
             x: 100
             y: 100
             radius: 40
