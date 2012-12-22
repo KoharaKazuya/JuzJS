@@ -8,4 +8,8 @@ class Node
             y: 100
             radius: 40
             draggable: true
+            click: (layer)->
+                $(this).setLayer(layer, {
+                    fillStyle: "red"
+                    })
             })
