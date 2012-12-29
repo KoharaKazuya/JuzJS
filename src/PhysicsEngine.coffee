@@ -37,8 +37,8 @@ class PhysicsEngine
 
     # 1 フレームでかかる力を制限する
     limitedForce: (vector)->
-        vector.x = Math.min(Math.max(-100, vector.x), 100)
-        vector.y = Math.min(Math.max(-100, vector.y), 100)
+        vector.x = Math.min(Math.max(-1000, vector.x), 1000)
+        vector.y = Math.min(Math.max(-1000, vector.y), 1000)
         vector
 
     # ノードの位置を更新
