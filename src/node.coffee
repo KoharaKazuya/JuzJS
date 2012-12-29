@@ -2,11 +2,10 @@ class Node
 
     canvas: undefined
     id: undefined
-    IM: new IDManager()
 
-    constructor: (canvas_)->
+    constructor: (canvas_, id_manager)->
         canvas = canvas_
-        id = IM.getJCanvasUniqueName()
+        id = id_manager.getJCanvasUniqueName()
         canvas.drawArc({
             layer: true
             name: id
