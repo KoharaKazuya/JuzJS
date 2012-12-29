@@ -9,7 +9,7 @@ $(function() {
     function u() {
         engine.update([node1, node2]);
         $("canvas").drawLayers();
-        setTimeout(u, 1.0 / 60);
+        setTimeout(u, 1000.0 / 60);
     }
     u();
 });
