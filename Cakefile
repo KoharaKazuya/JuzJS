@@ -20,7 +20,7 @@ task "build", "ビルド", ->
 
     target = target_dir + '/' + target_name
 
-    exec "coffee --join " + target + " --compile " + files, (err, stdout, stderr)->
+    exec "coffee --bare --join " + target + " --compile " + files, (err, stdout, stderr)->
 
         console.log err if err
         console.log stdout if stdout
