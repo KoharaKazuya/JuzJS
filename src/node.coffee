@@ -22,7 +22,7 @@ class Node
         @canvas.getLayer(@id).y
 
     setX: (new_x)->
-        @canvas.getLayer(@id).x = new_x
+        @canvas.getLayer(@id).x = Math.round(new_x)
 
     setY: (new_y)->
-        @canvas.getLayer(@id).y = new_y
+        @canvas.getLayer(@id).y = Math.round(new_y)
