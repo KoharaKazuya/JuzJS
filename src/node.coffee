@@ -22,7 +22,9 @@ class Node
         @canvas.getLayer(@id).y
 
     setX: (new_x)->
+        new_x = Math.max(Math.min(0, new_x), @canvas.width())
         @canvas.getLayer(@id).x = Math.round(new_x)
 
     setY: (new_y)->
+        new_y = Math.max(Math.min(0, new_y), @canvas.height())
         @canvas.getLayer(@id).y = Math.round(new_y)
