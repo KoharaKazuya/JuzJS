@@ -7,11 +7,16 @@ class Vector
         Math.sqrt(Math.pow(@x, 2) + Math.pow(@y, 2))
 
     getAngle: ->
-        if @x == 0
+        if @x == 0 && @y == 0
+            0
+        else if @x == 0
             if @y < 0
                 - Math.PI / 2
-            else if @y > 0
+            else
                 Math.PI / 2
+        else if @y == 0
+            if @x < 0
+                Math.PI
             else
                 0
         else
