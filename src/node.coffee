@@ -25,3 +25,9 @@ class Node
 
     getY: ->
         canvas.getLayer(id).y
+
+    setX: (new_x)->
+        canvas.getLayer(id).x = new_x
+
+    setY: (new_y)->
+        canvas.getLayer(id).y = new_y
