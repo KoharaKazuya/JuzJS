@@ -1,14 +1,9 @@
 class Node
 
-    canvas: undefined
-    id: undefined
-
-    constructor: (canvas_, id_manager)->
-        canvas = canvas_
-        id = id_manager.getJCanvasUniqueName()
-        canvas.drawArc({
+    constructor: (@canvas, @id)->
+        @canvas.drawArc({
             layer: true
-            name: id
+            name: @id
             fillStyle: "black"
             x: 100
             y: 100
@@ -21,13 +16,13 @@ class Node
             })
 
     getX: ->
-        canvas.getLayer(id).x
+        @canvas.getLayer(@id).x
 
     getY: ->
-        canvas.getLayer(id).y
+        @canvas.getLayer(@id).y
 
     setX: (new_x)->
-        canvas.getLayer(id).x = new_x
+        @canvas.getLayer(@id).x = new_x
 
     setY: (new_y)->
-        canvas.getLayer(id).y = new_y
+        @canvas.getLayer(@id).y = new_y
