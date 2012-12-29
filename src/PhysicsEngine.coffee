@@ -34,8 +34,8 @@ class PhysicsEngine
         for i in [0...nodeList.length]
             node = nodeList[i]
             force = forceList[i]
-            node.setX(node.getX() + force.getX() * @UPDATE_SPEED)
-            node.setY(node.getY() + force.getY() * @UPDATE_SPEED)
+            node.setX(node.getX() + force.x * @UPDATE_SPEED)
+            node.setY(node.getY() + force.y * @UPDATE_SPEED)
 
     # ノードの位置ベクトルを取得
     point2Vector: (node)->
