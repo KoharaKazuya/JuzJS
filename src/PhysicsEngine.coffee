@@ -15,9 +15,10 @@ class PhysicsEngine
             v = new Vector(0, 0)
             for other in nodeList
                 if node == other then continue
-                vect = point2Vector(other, node)
-                v = v.add(new Vector(REPLUSION_BASE / Math.pow(vect.scalar, 2), vect.angle))
+                vect = point2Vector(node).sub(point2Vector(other))
+                v = v.add(Vector.polar2rect(REPLUSION_BASE / vect.getScalar(), vect.getAngle()))
             v
 
-    # 2地点のノードの座標からベクトルを計算する
-    point2Vector: (origin, dest)->
+    # ノードの位置ベクトルを取得
+    point2Vector: (node)->
+        new Vector(node.getX(), node.getY())
