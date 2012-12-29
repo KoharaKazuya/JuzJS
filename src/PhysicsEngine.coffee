@@ -17,7 +17,11 @@ class PhysicsEngine
         for other in nodeList
             continue if node == other
             vect = @point2Vector(node).sub(@point2Vector(other))
-            v = v.add(Vector.polar2rect(@REPLUSION_BASE / Math.pow(vect.getScalar(), 2), vect.getAngle()))
+            div = Math.pow(vect.getScalar(), 2)
+            if div == 0  # 0 での除算の防止
+                v = v.add(Vector.polar2rect(@REPLUSION_BASE, 2 * Math.PI * Math.random()))
+            else
+                v = v.add(Vector.polar2rect(@REPLUSION_BASE / div, vect.getAngle()))
         v
 
     # 引力を計算
