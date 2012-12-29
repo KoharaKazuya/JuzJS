@@ -20,7 +20,10 @@ class Vector
             else
                 0
         else
-            Math.atan(@y / @x)
+            if @x < 0
+                Math.atan(@y / @x) + Math.PI
+            else
+                (Math.atan(@y / @x) + Math.PI * 2) % (Math.PI * 2)
 
     add: (other)->
         new Vector(@x + other.x, @y + other.y)
