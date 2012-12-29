@@ -6,17 +6,17 @@ class PhysicsEngine
 
     update: (nodeList)->
         forceList = for node in nodeList
-            replusionVector = computeReplusion(node, nodeList)
-            gravityVector = computeGravity(node, nodeList)
-            replusionVector.add(gravityVector)
-        updatePosition(nodeList, forceList)
+            replusionVector = @computeReplusion(node, nodeList)
+            gravityVector = @computeGravity(node, nodeList)
+            @replusionVector.add(gravityVector)
+        @updatePosition(nodeList, forceList)
 
     # 斥力を計算
     computeReplusion: (node, nodeList)->
         v = new Vector(0, 0)
         for other in nodeList
             continue if node == other
-            vect = point2Vector(node).sub(point2Vector(other))
+            vect = @point2Vector(node).sub(@point2Vector(other))
             v = v.add(Vector.polar2rect(REPLUSION_BASE / vect.getScalar(), vect.getAngle()))
         v
 
@@ -25,7 +25,7 @@ class PhysicsEngine
         v = new Vector(0, 0)
         for other in nodeList
             continue if node == other
-            vect = point2Vector(other).sub(point2Vector(node))
+            vect = @point2Vector(other).sub(@point2Vector(node))
             v = v.add(Vector.polar2rect(GRAVITY_BASE * vect.getScalar(), vect.getAngle()))
         v
 
