@@ -17,7 +17,7 @@ class PhysicsEngine
         for other in nodeList
             continue if node == other
             vect = @point2Vector(node).sub(@point2Vector(other))
-            v = v.add(Vector.polar2rect(@REPLUSION_BASE / vect.getScalar(), vect.getAngle()))
+            v = v.add(Vector.polar2rect(@REPLUSION_BASE / Math.pow(vect.getScalar(), 2), vect.getAngle()))
         v
 
     # 引力を計算
@@ -26,7 +26,7 @@ class PhysicsEngine
         for other in nodeList
             continue if node == other
             vect = @point2Vector(other).sub(@point2Vector(node))
-            v = v.add(Vector.polar2rect(@GRAVITY_BASE * vect.getScalar(), vect.getAngle()))
+            v = v.add(Vector.polar2rect(@GRAVITY_BASE * Math.pow(vect.getScalar(), 2), vect.getAngle()))
         v
 
     # ノードの位置を更新
