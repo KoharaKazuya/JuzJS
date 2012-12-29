@@ -1,7 +1,15 @@
 $(function() {
     var im = new IDManager();
-    var node1 = new Node($("canvas"), im);
-    var node2 = new Node($("canvas"), im);
+    var node1 = new Node($("canvas"), im.getJCanvasUniqueName());
+    var node2 = new Node($("canvas"), im.getJCanvasUniqueName());
     var engine = new PhysicsEngine();
-    engine.update([node1, node2]);
+
+    node1.setX(30);
+
+    function u() {
+        engine.update([node1, node2]);
+        $("canvas").drawLayers();
+        setTimeout(u, 1.0 / 60);
+    }
+    u();
 });
