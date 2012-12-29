@@ -1,8 +1,8 @@
 class PhysicsEngine
 
-    REPLUSION_BASE: 100
+    REPLUSION_BASE: 1000000
     GRAVITY_BASE: 0.01
-    UPDATE_SPEED: 0.01
+    UPDATE_SPEED: 0.02
 
     update: (nodeList)->
         forceList = for node in nodeList
