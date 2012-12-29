@@ -22,6 +22,7 @@ class PhysicsEngine
                 v = v.add(Vector.polar2rect(@REPLUSION_BASE, 2 * Math.PI * Math.random()))
             else
                 v = v.add(Vector.polar2rect(@REPLUSION_BASE / div, vect.getAngle()))
+            v = @limitedForce(v)
         v
 
     # 引力を計算
@@ -31,7 +32,14 @@ class PhysicsEngine
             continue if node == other
             vect = @point2Vector(other).sub(@point2Vector(node))
             v = v.add(Vector.polar2rect(@GRAVITY_BASE * Math.pow(vect.getScalar(), 2), vect.getAngle()))
+            v = @limitedForce(v)
         v
+
+    # 1 フレームでかかる力を制限する
+    limitedForce: (vector)->
+        vector.x = Math.min(Math.max(-100, vector.x), 100)
+        vector.y = Math.min(Math.max(-100, vector.y), 100)
+        vector
 
     # ノードの位置を更新
     updatePosition: (nodeList, forceList)->
