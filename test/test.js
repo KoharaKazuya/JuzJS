@@ -1,14 +1,18 @@
 $(function() {
-    var im = new IDManager();
-    var node1 = new Node($("canvas"), im.getJCanvasUniqueName());
-    var node2 = new Node($("canvas"), im.getJCanvasUniqueName());
-    var engine = new PhysicsEngine();
 
-    node1.setX(30);
+    var NODE_NUM = 10;
+    var CANVAS = $("canvas");
+    var ENGINE = new PhysicsEngine();
+
+    var im = new IDManager();
+    var nodeList = [];
+    for (var i=0; i<NODE_NUM; ++i) {
+        nodeList[i] = new Node(CANVAS, im.getJCanvasUniqueName());
+    }
 
     function u() {
-        engine.update([node1, node2]);
-        $("canvas").drawLayers();
+        ENGINE.update(nodeList);
+        CANVAS.drawLayers();
         setTimeout(u, 1000.0 / 60);
     }
     u();
