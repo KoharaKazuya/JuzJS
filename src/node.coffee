@@ -46,10 +46,18 @@ class Node
     setX: (new_x)->
         new_x = Math.min(Math.max(0, new_x), @canvas.width())
         @canvas.getLayer(@id).x = Math.round(new_x)
+        for id, con of @outConnections
+            con.setSrcX(new_x)
+        for con in @inConnections
+            con.setDestX(new_x)
 
     setY: (new_y)->
         new_y = Math.min(Math.max(0, new_y), @canvas.height())
         @canvas.getLayer(@id).y = Math.round(new_y)
+        for id, con of @outConnections
+            con.setSrcY(new_y)
+        for id, con of @inConnections
+            con.setDestY(new_y)
 
     getGravity: (other)->
         outCon = @outConnections[other.id]
