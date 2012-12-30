@@ -17,23 +17,16 @@ $(function() {
         });
     }
 
-    connectionList = [];
-    connectionList[0] = new Connection(CANVAS, im.getJCanvasUniqueName(),
-        nodeList[0], nodeList[1]);
-    connectionList[0].setStrength(1);
-    connectionList[0].setLabel("スラッシュ族, BiographyConnector, JuzJS", {
+    nodeList[0].connect(nodeList[1], 1, "スラッシュ族, BiographyConnector, JuzJS", {
         style: "bold 20pt メイリオ",
-        width: 100
+        width: 100,
+        color: "green",
+        scaleOnMouseout: 0.8
     });
-    connectionList[1] = new Connection(CANVAS, im.getJCanvasUniqueName(),
-        nodeList[1], nodeList[2]);
-    connectionList[1].setStrength(0.5);
+    nodeList[1].connect(nodeList[2], 0.5, "何か");
 
     function u() {
         ENGINE.update(nodeList);
-        for (var i=0; i<connectionList.length; ++i) {
-            connectionList[i].update();
-        }
         CANVAS.drawLayers();
         setTimeout(u, 1000.0 / 60);
     }

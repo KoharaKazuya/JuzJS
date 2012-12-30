@@ -48,7 +48,7 @@ class Node
         @canvas.getLayer(@id).x = Math.round(new_x)
         for id, con of @outConnections
             con.setSrcX(new_x)
-        for con in @inConnections
+        for id, con of @inConnections
             con.setDestX(new_x)
 
     setY: (new_y)->
@@ -66,9 +66,9 @@ class Node
         return inCon.strength if inCon
         0
 
-    connect: (other, strength)->
+    connect: (other, strength, text, text_options)->
         con = new Connection(@canvas, "from_" + this.id + "_to_" + other.id,
-            this.getX(), this.getY(), other.getX(), other.getY(), strength)
+            this.getX(), this.getY(), other.getX(), other.getY(), strength, text, text_options)
         @outConnections[other.id] = con
         other.inConnections[this.id] = con
 

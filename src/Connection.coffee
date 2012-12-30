@@ -1,7 +1,7 @@
 # ノード間のつながり
 class Connection
 
-    constructor: (@canvas, @id, sx, sy, dx, dy, @strength)->
+    constructor: (@canvas, @id, sx, sy, dx, dy, @strength, text, text_options)->
         @canvas.drawLine({
             layer: true
             name: @id
@@ -16,21 +16,28 @@ class Connection
             name: @id + "_label"
             fromCenter: true
             })
-        @setLabel("", {
-            style: "20pt sans-serif"
-            scaleOnMouseout: 0.5
-            color: "black"
-            })
+        if text?
+            @setLabel(text, text_options)
+        else
+            @setLabel("")
 
     getSrcX: -> @canvas.getLayer(@id).x1
     getSrcY: -> @canvas.getLayer(@id).y1
     getDestX: -> @canvas.getLayer(@id).x2
     getDestY: -> @canvas.getLayer(@id).y2
 
-    setSrcX: (value)-> @canvas.getLayer(@id).x1 = value
-    setSrcY: (value)-> @canvas.getLayer(@id).y1 = value
-    setDestX: (value)-> @canvas.getLayer(@id).x2 = value
-    setDestY: (value)-> @canvas.getLayer(@id).y2 = value
+    setSrcX: (value)->
+        @canvas.getLayer(@id).x1 = value
+        @update()
+    setSrcY: (value)->
+        @canvas.getLayer(@id).y1 = value
+        @update()
+    setDestX: (value)->
+        @canvas.getLayer(@id).x2 = value
+        @update()
+    setDestY: (value)->
+        @canvas.getLayer(@id).y2 = value
+        @update()
 
     update: ->
         layer = @canvas.getLayer(@id)
@@ -41,12 +48,17 @@ class Connection
     setLabel: (text, options)->
         layer = @canvas.getLayer(@id + "_label")
         layer.text = text
-        layer.fillStyle = options.color if options.color?
         if options?
+            layer.fillStyle = options.color if options.color?
             layer.font = options.style if options.style?
             layer.maxWidth = options.width if options.width?
             if options.scaleOnMouseout
                 layer.scale = options.scaleOnMouseout
                 layer.mouseover = (_)-> _.scale = 1
                 layer.mouseout = (_)-> _.scale = options.scaleOnMouseout
-
+        else
+            layer.fillStyle = "black"
+            layer.font = "20pt sans-serif"
+            layer.scale = 0.5
+            layer.mouseover = (_)-> _.scale = 1
+            layer.mouseout = (_)-> _.scale = 0.5
