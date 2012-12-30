@@ -28,3 +28,13 @@ class Node
     setY: (new_y)->
         new_y = Math.min(Math.max(0, new_y), @canvas.height())
         @canvas.getLayer(@id).y = Math.round(new_y)
+
+    getGravity: (other)->
+        @gravities ?= {}
+        gravity = @gravities[other.id]
+        gravity ?= 0
+
+    setGravity: (other, value)->
+        @gravities ?= {}
+        @gravities[other.id] = value
+        other.setGravity(this, value) if other.getGravity(this) != value
