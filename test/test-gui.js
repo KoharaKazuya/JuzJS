@@ -10,11 +10,19 @@ $(function() {
         nodeList[i] = new Node(CANVAS, im.getJCanvasUniqueName());
     }
 
-    nodeList[0].setGravity(nodeList[1], 1);
-    nodeList[1].setGravity(nodeList[2], 0.5);
+    connectionList = [];
+    connectionList[0] = new Connection(CANVAS, im.getJCanvasUniqueName(),
+        nodeList[0], nodeList[1]);
+    connectionList[0].setStrength(1);
+    connectionList[1] = new Connection(CANVAS, im.getJCanvasUniqueName(),
+        nodeList[1], nodeList[2]);
+    connectionList[1].setStrength(0.5);
 
     function u() {
         ENGINE.update(nodeList);
+        for (var i=0; i<connectionList.length; ++i) {
+            connectionList[i].update();
+        }
         CANVAS.drawLayers();
         setTimeout(u, 1000.0 / 60);
     }
