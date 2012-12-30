@@ -21,6 +21,10 @@ class Connection
         else
             @setLabel("")
 
+    destroy: ->
+        @canvas.removeLayer(@id)
+        @canvas.removeLayer(@id + "_label")
+
     getSrcX: -> @canvas.getLayer(@id).x1
     getSrcY: -> @canvas.getLayer(@id).y1
     getDestX: -> @canvas.getLayer(@id).x2

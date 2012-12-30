@@ -25,6 +25,10 @@ $(function() {
     });
     nodeList[1].connect(nodeList[2], 0.5, "何か");
 
+    nodeList[2].destroy();
+    delete nodeList[2];
+    nodeList = nodeList.slice(0, 2).concat(nodeList.slice(3, 10));
+
     function u() {
         ENGINE.update(nodeList);
         CANVAS.drawLayers();
