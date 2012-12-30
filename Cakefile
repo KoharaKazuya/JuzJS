@@ -8,6 +8,7 @@ src_files = [
     "IDManager"
     "PhysicsEngine"
     "Vector"
+    "Connection"
 ]
 
 option "-w", "--watch", "自動ビルド"
