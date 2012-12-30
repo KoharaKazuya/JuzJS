@@ -30,8 +30,10 @@ class PhysicsEngine
         v = new Vector(0, 0)
         for other in nodeList
             continue if node == other
+            g = node.getGravity(other)
+            continue if g == 0
             vect = @point2Vector(other).sub(@point2Vector(node))
-            v = v.add(Vector.polar2rect(@GRAVITY_BASE * Math.pow(vect.getScalar(), 2), vect.getAngle()))
+            v = v.add(Vector.polar2rect(g * @GRAVITY_BASE * Math.pow(vect.getScalar(), 2), vect.getAngle()))
             v = @limitedForce(v)
         v
 
