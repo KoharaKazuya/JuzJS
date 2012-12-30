@@ -27,3 +27,13 @@ test("ノード間の引力", function() {
     ok(this.engine.computeGravity(node1, nodeList).getScalar() <
         this.engine.computeGravity(node3, nodeList).getScalar(), "引力が大きく設定されているほど加わる力も大きくなる");
 });
+test("コネクション", function() {
+    var node1 = new Node(this.canvas, this.im.getJCanvasUniqueName());
+    var node2 = new Node(this.canvas, this.im.getJCanvasUniqueName());
+    var connection1 = new Connection(this.canvas, this.im.getJCanvasUniqueName(),
+        node1, node2);
+    connection1.setStrength(1);
+    equal(connection1.getStrength(), 1, "設定が行われたか");
+    equal(node1.getGravity(node2), 1, "コネクションの設定が引力に直接反映");
+    equal(node2.getGravity(node1), 1, "コネクションの設定が引力に直接反映");
+});

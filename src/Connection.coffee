@@ -11,3 +11,11 @@ class Connection
             x2: @node2.getX()
             y2: @node2.getY()
             })
+
+    getStrength: ->
+        @strength
+
+    setStrength: (value)->
+        @node1.setGravity(@node2, value)
+        @node2.setGravity(@node1, value)
+        @strength = value
