@@ -10,13 +10,12 @@ class Connection
         @canvas.drawText({
             layer: true
             name: @id + "_label"
-            fillStyle: "black"
-            strokeStyle: "white"
             fromCenter: true
             })
         @setLabel("", {
             style: "20pt sans-serif"
             scaleOnMouseout: 0.5
+            color: "black"
             })
 
     getStrength: ->
@@ -40,6 +39,7 @@ class Connection
     setLabel: (text, options)->
         layer = @canvas.getLayer(@id + "_label")
         layer.text = text
+        layer.fillStyle = options.color if options.color?
         if options?
             layer.font = options.style if options.style?
             layer.maxWidth = options.width if options.width?
