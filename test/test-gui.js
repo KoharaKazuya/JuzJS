@@ -8,6 +8,9 @@ $(function() {
     var nodeList = [];
     for (var i=0; i<NODE_NUM; ++i) {
         nodeList[i] = new Node(CANVAS, im.getJCanvasUniqueName());
+        nodeList[i].setIcon("https://si0.twimg.com/profile_images/2504370963/6u5qf6cl9jtwew6poxcj_normal.png", {
+            opacity: 0.5
+        });
     }
 
     connectionList = [];

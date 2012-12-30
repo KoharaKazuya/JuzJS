@@ -1,19 +1,17 @@
 class Node
 
     constructor: (@canvas, @id)->
-        @canvas.drawArc({
-            layer: true
+        @canvas.addLayer({
             name: @id
-            fillStyle: "black"
-            x: 100
-            y: 100
-            radius: 40
+            type: "image"
             draggable: true
-            click: (layer)->
-                $(this).setLayer(layer, {
-                    fillStyle: "red"
-                    })
             })
+
+    setIcon: (src, options)->
+        layer = @canvas.getLayer(@id)
+        layer.source = src
+        if options?
+            layer.opacity = options.opacity if options.opacity?
 
     getX: ->
         @canvas.getLayer(@id).x
