@@ -53,8 +53,3 @@ class Node
         @gravities ?= {}
         gravity = @gravities[other.id]
         gravity ?= 0
-
-    setGravity: (other, value)->
-        @gravities ?= {}
-        @gravities[other.id] = value
-        other.setGravity(this, value) if other.getGravity(this) != value
