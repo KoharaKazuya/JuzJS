@@ -4,12 +4,14 @@ src_dir = "./src"
 target_dir = "./out"
 target_name = "JuzJS.js"
 src_files = [
+    "header"
     "node"
     "IDManager"
     "PhysicsEngine"
     "Vector"
     "Connection"
     "Controller"
+    "footer"
 ]
 
 option "-w", "--watch", "自動ビルド"
