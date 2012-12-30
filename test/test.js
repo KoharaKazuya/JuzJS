@@ -28,12 +28,21 @@ test("ノード間の引力", function() {
         this.engine.computeGravity(node3, nodeList).getScalar(), "引力が大きく設定されているほど加わる力も大きくなる");
 });
 test("コネクション", function() {
-    var node1 = new Node(this.canvas, this.im.getJCanvasUniqueName());
-    var node2 = new Node(this.canvas, this.im.getJCanvasUniqueName());
-    var connection1 = new Connection(this.canvas, this.im.getJCanvasUniqueName(),
-        node1, node2);
-    connection1.setStrength(1);
-    equal(connection1.getStrength(), 1, "設定が行われたか");
-    equal(node1.getGravity(node2), 1, "コネクションの設定が引力に直接反映");
-    equal(node2.getGravity(node1), 1, "コネクションの設定が引力に直接反映");
+    var src = new Node(this.canvas, this.im.getJCanvasUniqueName());
+    var dest = new Node(this.canvas, this.im.getJCanvasUniqueName());
+    var connection = new Connection(
+        this.canvas, this.im.getJCanvasUniqueName(),
+        src.getX(), src.getY(), dest.getX(), dest.getY(), 1);
+    deepEqual(connection.getSrcX(), src.getX(), "コネクションの元ノードが設定されているか");
+    deepEqual(connection.getSrcY(), src.getY(), "コネクションの元ノードが設定されているか");
+    deepEqual(connection.getDestX(), src.getX(), "コネクションの元ノードが設定されているか");
+    deepEqual(connection.getDestY(), src.getY(), "コネクションの元ノードが設定されているか");
+    equal(connection.getStrength(), 1, "コネクションの強さが設定されているか");
 });
+// test("別ノードとの接続", function() {
+//     var node1 = new Node(this.canvas, this.im.getJCanvasUniqueName());
+//     var node2 = new Node(this.canvas, this.im.getJCanvasUniqueName());
+//     node1.connect(node2, 1);
+//     equal(node1.getGravity(node2), 1, "コネクションの設定が引力に直接反映");
+//     equal(node2.getGravity(node1), 1, "コネクションの設定が引力に直接反映");
+// });
