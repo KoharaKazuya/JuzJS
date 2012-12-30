@@ -1,11 +1,32 @@
 class Node
 
-    constructor: (@canvas, @id)->
-        @canvas.addLayer({
+    SUPPORTED_EVENTS: [
+        "click"
+        "dblclick"
+        "mousedown"
+        "mouseup"
+        "mousemove"
+        "mouseover"
+        "mouseout"
+        "dragstart"
+        "drag"
+        "dragstop"
+        "touchstart"
+        "touchend"
+        "touchmove"
+    ]
+
+    constructor: (@canvas, @id, events)->
+        pref = {
             name: @id
             type: "image"
             draggable: true
-            })
+            }
+        if events?
+            for event, fn of events
+                throw new Error("サポートされていないイベントです。") if @SUPPORTED_EVENTS.indexOf(event) == -1
+                pref[event] = (layer)=> fn(this, layer.eventX, layer.eventY)
+        @canvas.addLayer(pref)
 
     setIcon: (src, options)->
         layer = @canvas.getLayer(@id)

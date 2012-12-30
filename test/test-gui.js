@@ -7,7 +7,11 @@ $(function() {
     var im = new IDManager();
     var nodeList = [];
     for (var i=0; i<NODE_NUM; ++i) {
-        nodeList[i] = new Node(CANVAS, im.getJCanvasUniqueName());
+        nodeList[i] = new Node(CANVAS, im.getJCanvasUniqueName(), {
+            dblclick: function(node, ex, ey) {
+                alert("(" + ex + "," + ey + ") at (" + node.getX() + "," + node.getY() + ")");
+            }
+        });
         nodeList[i].setIcon("https://si0.twimg.com/profile_images/2504370963/6u5qf6cl9jtwew6poxcj_normal.png", {
             opacity: 0.5
         });
