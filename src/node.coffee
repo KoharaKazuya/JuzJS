@@ -1,7 +1,5 @@
 class Node
 
-    gravities: {}
-
     constructor: (@canvas, @id)->
         @canvas.drawArc({
             layer: true
@@ -32,8 +30,11 @@ class Node
         @canvas.getLayer(@id).y = Math.round(new_y)
 
     getGravity: (other)->
-        gravity = @gravities[other]
+        @gravities ?= {}
+        gravity = @gravities[other.id]
         gravity ?= 0
 
     setGravity: (other, value)->
-        @gravities[other] = value
+        @gravities ?= {}
+        @gravities[other.id] = value
+        other.setGravity(this, value) if other.getGravity(this) != value
