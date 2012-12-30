@@ -9,6 +9,7 @@ src_files = [
     "PhysicsEngine"
     "Vector"
     "Connection"
+    "Controller"
 ]
 
 option "-w", "--watch", "自動ビルド"
