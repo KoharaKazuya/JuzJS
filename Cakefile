@@ -10,8 +10,9 @@ src_files = [
     "Vector"
 ]
 
+option "-w", "--watch", "自動ビルド"
 
-task "build", "ビルド", ->
+task "build", "ビルド", (options)->
 
     fileList = for filename in src_files
         console.log filename
@@ -20,7 +21,13 @@ task "build", "ビルド", ->
 
     target = target_dir + '/' + target_name
 
-    exec "coffee --bare --join " + target + " --compile " + files, (err, stdout, stderr)->
+    args = []
+    args.push "--bare"
+    args.push "--watch" if options.watch
+    args.push "--join " + target
+    args.push "--compile " + files
+
+    exec "coffee " + args.join(" "), (err, stdout, stderr)->
 
         console.log err if err
         console.log stdout if stdout
