@@ -1,11 +1,15 @@
 # ノード間のつながり
 class Connection
 
-    constructor: (@canvas, @id, @node1, @node2)->
+    constructor: (@canvas, @id, sx, sy, dx, dy, @strength)->
         @canvas.drawLine({
             layer: true
             name: @id
             strokeStyle: "black"
+            x1: sx
+            y1: sy
+            x2: dx
+            y2: dy
             })
         @canvas.drawText({
             layer: true
@@ -18,23 +22,27 @@ class Connection
             color: "black"
             })
 
+    getSrcX: -> @canvas.getLayer(@id).x1
+    getSrcY: -> @canvas.getLayer(@id).y1
+    getDestX: -> @canvas.getLayer(@id).x2
+    getDestY: -> @canvas.getLayer(@id).y2
+
+    setSrcX: (value)-> @canvas.getLayer(@id).x1 = value
+    setSrcY: (value)-> @canvas.getLayer(@id).y1 = value
+    setDestX: (value)-> @canvas.getLayer(@id).x2 = value
+    setDestY: (value)-> @canvas.getLayer(@id).y2 = value
+
     getStrength: ->
         @strength
 
     setStrength: (value)->
-        @node1.setGravity(@node2, value)
-        @node2.setGravity(@node1, value)
         @strength = value
 
     update: ->
         layer = @canvas.getLayer(@id)
-        layer.x1 = @node1.getX()
-        layer.y1 = @node1.getY()
-        layer.x2 = @node2.getX()
-        layer.y2 = @node2.getY()
         label = @canvas.getLayer(@id + "_label")
-        label.x = (@node1.getX() + @node2.getX()) / 2
-        label.y = (@node1.getY() + @node2.getY()) / 2
+        label.x = (layer.x1 + layer.x2) / 2
+        label.y = (layer.y1 + layer.y2) / 2
 
     setLabel: (text, options)->
         layer = @canvas.getLayer(@id + "_label")
