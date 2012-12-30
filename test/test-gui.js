@@ -10,6 +10,9 @@ $(function() {
         nodeList[i] = new Node(CANVAS, im.getJCanvasUniqueName());
     }
 
+    nodeList[0].setGravity(nodeList[1], 1);
+    nodeList[1].setGravity(nodeList[2], 0.5);
+
     function u() {
         ENGINE.update(nodeList);
         CANVAS.drawLayers();
