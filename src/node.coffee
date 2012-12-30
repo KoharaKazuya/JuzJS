@@ -28,6 +28,8 @@ class Node
                 throw new Error("サポートされていないイベントです。") if @SUPPORTED_EVENTS.indexOf(event) == -1
                 pref[event] = (layer)=> fn(this, layer.eventX, layer.eventY)
         @canvas.addLayer(pref)
+        @outConnections = {}
+        @inConnections = {}
 
     setIcon: (src, options)->
         layer = @canvas.getLayer(@id)
@@ -50,6 +52,15 @@ class Node
         @canvas.getLayer(@id).y = Math.round(new_y)
 
     getGravity: (other)->
-        @gravities ?= {}
-        gravity = @gravities[other.id]
-        gravity ?= 0
+        outCon = @outConnections[other.id]
+        return outCon.strength if outCon
+        inCon = @inConnections[other.id]
+        return inCon.strength if inCon
+        0
+
+    connect: (other, strength)->
+        con = new Connection(@canvas, "from_" + this.id + "_to_" + other.id,
+            this.getX(), this.getY(), other.getX(), other.getY(), strength)
+        @outConnections[other.id] = con
+        other.inConnections[this.id] = con
+

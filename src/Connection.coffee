@@ -32,12 +32,6 @@ class Connection
     setDestX: (value)-> @canvas.getLayer(@id).x2 = value
     setDestY: (value)-> @canvas.getLayer(@id).y2 = value
 
-    getStrength: ->
-        @strength
-
-    setStrength: (value)->
-        @strength = value
-
     update: ->
         layer = @canvas.getLayer(@id)
         label = @canvas.getLayer(@id + "_label")
