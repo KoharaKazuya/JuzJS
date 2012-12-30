@@ -5,6 +5,7 @@ class Node
             name: @id
             type: "image"
             draggable: true
+            cursor: "pointer"
             })
 
     setIcon: (src, options)->
