@@ -14,6 +14,10 @@ $(function() {
     connectionList[0] = new Connection(CANVAS, im.getJCanvasUniqueName(),
         nodeList[0], nodeList[1]);
     connectionList[0].setStrength(1);
+    connectionList[0].setLabel("スラッシュ族, BiographyConnector, JuzJS", {
+        style: "bold 20pt メイリオ",
+        width: 100
+    });
     connectionList[1] = new Connection(CANVAS, im.getJCanvasUniqueName(),
         nodeList[1], nodeList[2]);
     connectionList[1].setStrength(0.5);
