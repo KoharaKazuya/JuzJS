@@ -1,1 +1,1 @@
-JuzJS = ->
+JuzJS = do ->

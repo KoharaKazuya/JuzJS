@@ -1,6 +1,6 @@
 $(function() {
 
-    var controller = new Controller($("canvas"), new PhysicsEngine());
+    var controller = JuzJS("canvas");
 
     var NODE_NUM = 10;
 
@@ -24,5 +24,5 @@ $(function() {
     });
     nodeList[1].connect(nodeList[2], 0.5, "何か");
 
-    controller.removeNode(nodeList[2]);
+    JuzJS("canvas").removeNode(nodeList[2]);
 });
