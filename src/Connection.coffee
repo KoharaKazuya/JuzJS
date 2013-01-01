@@ -3,17 +3,13 @@
 
         @SEMITRANSPARENT: 0.3
 
-        constructor: (@canvas, @id, sx, sy, dx, dy, @strength, @label)->
+        constructor: (@canvas, @id, @strength, @label)->
             @canvas.drawLine({
                 layer: true
                 name: @id
                 index: 0
                 group: "connections"
                 strokeStyle: "black"
-                x1: sx
-                y1: sy
-                x2: dx
-                y2: dy
                 })
 
         destroy: ->
