@@ -2,11 +2,12 @@
 
         @SEMITRANSPARENT: 0.3
 
-        constructor: (@canvas, @id, @text, options)->
+        constructor: (@canvas, @id, text, options)->
             pref = {
                 layer: true
                 name: @id
                 group: "labels"
+                text: text
                 fromCenter: true
                 opacity: Label.SEMITRANSPARENT
             }
