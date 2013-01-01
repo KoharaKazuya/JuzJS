@@ -43,8 +43,6 @@
         setIcon: (src, options)->
             layer = @canvas.getLayer(@id)
             layer.source = src
-            if options?
-                layer.opacity = options.opacity if options.opacity?
 
         getX: ->
             @canvas.getLayer(@id).x
