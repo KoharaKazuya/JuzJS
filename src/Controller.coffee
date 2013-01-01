@@ -18,7 +18,7 @@
 
         start: ->
             @updater = setInterval(=>
-                @engine.update(@nodeList)
+                @engine.update(@nodeList, @canvas)
                 @canvas.drawLayers()
             , 1000 / 60)
 

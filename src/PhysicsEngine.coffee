@@ -4,11 +4,12 @@
         GRAVITY_BASE: 0.01
         UPDATE_SPEED: 0.02
 
-        update: (nodeList)->
+        update: (nodeList, canvas)->
             forceList = for node in nodeList
                 replusionVector = @computeReplusion(node, nodeList)
-                gravityVector = @computeGravity(node, nodeList)
-                replusionVector.add(gravityVector)
+                gravityVector   = @computeGravity(node, nodeList)
+                centerizeVector = @computeCenterize(node, canvas)
+                replusionVector.add(gravityVector).add(centerizeVector)
             @updatePosition(nodeList, forceList)
 
         # 斥力を計算
@@ -36,6 +37,12 @@
                 v = v.add(Vector.polar2rect(g * @GRAVITY_BASE * Math.pow(vect.getScalar(), 2), vect.getAngle()))
                 v = @limitedForce(v)
             v
+
+        # 中央への引力を計算
+        computeCenterize: (node, canvas)->
+            center_x = canvas.attr("width") / 2
+            center_y = canvas.attr("height") / 2
+            new Vector(center_x, center_y).sub(@point2Vector(node))
 
         # 1 フレームでかかる力を制限する
         limitedForce: (vector)->
