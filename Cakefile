@@ -5,6 +5,7 @@ target_dir = "./out"
 target_name = "JuzJS.js"
 src_files = [
     "header"
+    "Preference"
     "node"
     "IDManager"
     "PhysicsEngine"

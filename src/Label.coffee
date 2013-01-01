@@ -1,7 +1,5 @@
     class Label
 
-        @SEMITRANSPARENT: 0.3
-
         constructor: (@canvas, @id, text, options)->
             pref = {
                 layer: true
@@ -9,7 +7,7 @@
                 group: "labels"
                 text: text
                 fromCenter: true
-                opacity: Label.SEMITRANSPARENT
+                opacity: Preference.SEMITRANSPARENT
             }
             if options?
                 pref.fillStyle = options.color if options.color?

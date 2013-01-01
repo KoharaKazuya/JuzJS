@@ -1,9 +1,5 @@
     class PhysicsEngine
 
-        REPLUSION_BASE: 1000000
-        GRAVITY_BASE: 0.01
-        UPDATE_SPEED: 0.02
-
         update: (nodeList, canvas)->
             forceList = for node in nodeList
                 replusionVector = @computeReplusion(node, nodeList)
@@ -20,9 +16,9 @@
                 vect = @point2Vector(node).sub(@point2Vector(other))
                 div = Math.pow(vect.getScalar(), 2)
                 if div == 0  # 0 での除算の防止
-                    v = v.add(Vector.polar2rect(@REPLUSION_BASE, 2 * Math.PI * Math.random()))
+                    v = v.add(Vector.polar2rect(Preference.REPLUSION_BASE, 2 * Math.PI * Math.random()))
                 else
-                    v = v.add(Vector.polar2rect(@REPLUSION_BASE / div, vect.getAngle()))
+                    v = v.add(Vector.polar2rect(Preference.REPLUSION_BASE / div, vect.getAngle()))
                 v = @limitedForce(v)
             v
 
@@ -34,7 +30,7 @@
                 g = node.getGravity(other)
                 continue if g == 0
                 vect = @point2Vector(other).sub(@point2Vector(node))
-                v = v.add(Vector.polar2rect(g * @GRAVITY_BASE * Math.pow(vect.getScalar(), 2), vect.getAngle()))
+                v = v.add(Vector.polar2rect(g * Preference.GRAVITY_BASE * Math.pow(vect.getScalar(), 2), vect.getAngle()))
                 v = @limitedForce(v)
             v
 
@@ -55,8 +51,8 @@
             for i in [0...nodeList.length]
                 node = nodeList[i]
                 force = forceList[i]
-                node.setX(node.getX() + force.x * @UPDATE_SPEED)
-                node.setY(node.getY() + force.y * @UPDATE_SPEED)
+                node.setX(node.getX() + force.x * Preference.UPDATE_SPEED)
+                node.setY(node.getY() + force.y * Preference.UPDATE_SPEED)
 
         # ノードの位置ベクトルを取得
         point2Vector: (node)->
