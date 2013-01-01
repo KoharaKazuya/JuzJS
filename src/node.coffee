@@ -53,7 +53,8 @@
             @canvas.getLayer(@id).y
 
         setX: (new_x)->
-            new_x = Math.min(Math.max(0, new_x), @canvas.width())
+            icon_width = @canvas.getLayer(@id).width / 2
+            new_x = Math.min(Math.max(icon_width, new_x), @canvas.width()-icon_width)
             @canvas.getLayer(@id).x = Math.round(new_x)
             for id, obj of @outConnections
                 obj.connection.setSrcX(new_x)
@@ -61,7 +62,8 @@
                 obj.connection.setDestX(new_x)
 
         setY: (new_y)->
-            new_y = Math.min(Math.max(0, new_y), @canvas.height())
+            icon_height = @canvas.getLayer(@id).height / 2
+            new_y = Math.min(Math.max(icon_height, new_y), @canvas.height()-icon_height)
             @canvas.getLayer(@id).y = Math.round(new_y)
             for id, obj of @outConnections
                 obj.connection.setSrcY(new_y)
