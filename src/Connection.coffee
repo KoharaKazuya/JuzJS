@@ -5,6 +5,7 @@
             @canvas.drawLine({
                 layer: true
                 name: @id
+                index: 0
                 strokeStyle: "black"
                 x1: sx
                 y1: sy
