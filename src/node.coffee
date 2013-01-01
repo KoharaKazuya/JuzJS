@@ -1,5 +1,6 @@
     class Node
 
+        @SEMITRANSPARENT = 0.3
         SUPPORTED_EVENTS: [
             "click"
             "dblclick"
@@ -22,11 +23,19 @@
                 type: "image"
                 draggable: true
                 cursor: "pointer"
+                opacity: Node.SEMITRANSPARENT
+                group: "nodes"
                 }
-            if events?
-                for event, fn of events
-                    throw new Error("サポートされていないイベントです。") if @SUPPORTED_EVENTS.indexOf(event) == -1
-                    pref[event] = (layer)=> fn(this, layer.eventX, layer.eventY)
+            default_events = {
+                mouseover: (layer)=> @appeal()
+            }
+            for event in @SUPPORTED_EVENTS
+                do (event)=>
+                    pref[event] = (layer)=>
+                        fn = default_events[event]
+                        fn(layer) if fn
+                        fn = events[event]
+                        fn(this, layer.eventX, layer.eventY) if fn
             @canvas.addLayer(pref)
             @outConnections = {}
             @inConnections = {}
@@ -43,8 +52,6 @@
         setIcon: (src, options)->
             layer = @canvas.getLayer(@id)
             layer.source = src
-            if options?
-                layer.opacity = options.opacity if options.opacity?
 
         getX: ->
             @canvas.getLayer(@id).x
@@ -89,3 +96,25 @@
                 @outConnections[other.id].connection.destroy()
                 delete @outConnections[other.id]
                 delete other.inConnections[this.id]
+
+        appeal: ->
+            # 関連するノードの強調表示
+            @canvas.setLayerGroup("nodes", {
+                opacity: Node.SEMITRANSPARENT
+                })
+            last = @canvas.getLayers().length-1
+            for id, v of @outConnections
+                @canvas.setLayer(id, {opacity: 1})
+                @canvas.moveLayer(id, last)
+            for id, v of @inConnections
+                @canvas.setLayer(id, {opacity: 1})
+                @canvas.moveLayer(id, last)
+            @canvas.setLayer(@id, {opacity: 1})
+            @canvas.moveLayer(@id, last)
+            # 関連するコネクションの強調表示
+            @canvas.setLayerGroup("connections", {opacity: Connection.SEMITRANSPARENT})
+            @canvas.setLayerGroup("labels", {opacity: Connection.SEMITRANSPARENT})
+            for id, v of @outConnections
+                v.connection.appeal()
+            for id, v of @inConnections
+                v.connection.appeal()
