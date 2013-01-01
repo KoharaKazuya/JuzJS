@@ -98,13 +98,6 @@
                 delete other.inConnections[this.id]
 
         appeal: ->
-            # 関連するコネクションの強調表示
-            @canvas.setLayerGroup("connections", {opacity: Connection.SEMITRANSPARENT})
-            @canvas.setLayerGroup("labels", {opacity: Connection.SEMITRANSPARENT})
-            for id, v of @outConnections
-                v.connection.appeal()
-            for id, v of @inConnections
-                v.connection.appeal()
             # 関連するノードの強調表示
             @canvas.setLayerGroup("nodes", {
                 opacity: Node.SEMITRANSPARENT
@@ -118,3 +111,10 @@
                 @canvas.moveLayer(id, last)
             @canvas.setLayer(@id, {opacity: 1})
             @canvas.moveLayer(@id, last)
+            # 関連するコネクションの強調表示
+            @canvas.setLayerGroup("connections", {opacity: Connection.SEMITRANSPARENT})
+            @canvas.setLayerGroup("labels", {opacity: Connection.SEMITRANSPARENT})
+            for id, v of @outConnections
+                v.connection.appeal()
+            for id, v of @inConnections
+                v.connection.appeal()
