@@ -16,6 +16,7 @@ $(function() {
         });
     }
 
+    nodeList[0].connect(nodeList[1], 1, "とりあえず");
     nodeList[0].connect(nodeList[1], 1, "スラッシュ族, BiographyConnector, JuzJS", {
         style: "bold 20pt メイリオ",
         width: 100,
@@ -23,6 +24,8 @@ $(function() {
         scaleOnMouseout: 0.8
     });
     nodeList[1].connect(nodeList[2], 0.5, "何か");
-
-    JuzJS("canvas").removeNode(nodeList[2]);
+    nodeList[1].disconnect(nodeList[2]);
+    nodeList[3].connect(nodeList[4]);
+    nodeList[3].connect(nodeList[5]);
+    controller.removeNode(nodeList[3]);
 });

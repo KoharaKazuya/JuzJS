@@ -78,7 +78,14 @@
             0
 
         connect: (other, strength, text, text_options)->
+            disconnect(other)
             con = new Connection(@canvas, "from_" + this.id + "_to_" + other.id,
                 this.getX(), this.getY(), other.getX(), other.getY(), strength, text, text_options)
             @outConnections[other.id] = { node: other, connection: con }
             other.inConnections[this.id] = { node: this, connection: con }
+
+        disconnect: (other)->
+            if (other.id of @outConnections) && (this.id of other.inConnections)
+                @outConnections[other.id].connection.destroy()
+                delete @outConnections[other.id]
+                delete other.inConnections[this.id]
