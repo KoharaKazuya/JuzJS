@@ -6,7 +6,7 @@ target_name = "JuzJS.js"
 src_files = [
     "header"
     "Preference"
-    "node"
+    "Node"
     "IDManager"
     "PhysicsEngine"
     "Vector"
