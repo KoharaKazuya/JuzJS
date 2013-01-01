@@ -1,35 +1,18 @@
     class Node
 
-        @SEMITRANSPARENT = 0.3
-        SUPPORTED_EVENTS: [
-            "click"
-            "dblclick"
-            "mousedown"
-            "mouseup"
-            "mousemove"
-            "mouseover"
-            "mouseout"
-            "dragstart"
-            "drag"
-            "dragstop"
-            "touchstart"
-            "touchend"
-            "touchmove"
-        ]
-
         constructor: (@canvas, @id, events)->
             pref = {
                 name: @id
                 type: "image"
                 draggable: true
                 cursor: "pointer"
-                opacity: Node.SEMITRANSPARENT
+                opacity: Preference.SEMITRANSPARENT
                 group: "nodes"
                 }
             default_events = {
                 mouseover: (layer)=> @appeal()
             }
-            for event in @SUPPORTED_EVENTS
+            for event in Preference.SUPPORTED_EVENTS
                 do (event)=>
                     pref[event] = (layer)=>
                         fn = default_events[event]
@@ -101,7 +84,7 @@
         appeal: ->
             # 関連するノードの強調表示
             @canvas.setLayerGroup("nodes", {
-                opacity: Node.SEMITRANSPARENT
+                opacity: Preference.SEMITRANSPARENT
                 })
             last = @canvas.getLayers().length-1
             for id, v of @outConnections
@@ -113,8 +96,8 @@
             @canvas.setLayer(@id, {opacity: 1})
             @canvas.moveLayer(@id, last)
             # 関連するコネクションの強調表示
-            @canvas.setLayerGroup("connections", {opacity: Connection.SEMITRANSPARENT})
-            @canvas.setLayerGroup("labels", {opacity: Connection.SEMITRANSPARENT})
+            @canvas.setLayerGroup("connections", {opacity: Preference.SEMITRANSPARENT})
+            @canvas.setLayerGroup("labels", {opacity: Preference.SEMITRANSPARENT})
             for id, v of @outConnections
                 v.connection.appeal()
             for id, v of @inConnections

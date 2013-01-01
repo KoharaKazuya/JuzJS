@@ -1,8 +1,6 @@
     # ノード間のつながり
     class Connection
 
-        @SEMITRANSPARENT: 0.3
-
         constructor: (@canvas, @id, @strength, @label)->
             @canvas.drawLine({
                 layer: true
