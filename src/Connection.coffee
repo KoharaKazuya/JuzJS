@@ -3,33 +3,18 @@
 
         @SEMITRANSPARENT: 0.3
 
-        constructor: (@canvas, @id, sx, sy, dx, dy, @strength, text, text_options)->
+        constructor: (@canvas, @id, @strength, @label)->
             @canvas.drawLine({
                 layer: true
                 name: @id
                 index: 0
                 group: "connections"
                 strokeStyle: "black"
-                x1: sx
-                y1: sy
-                x2: dx
-                y2: dy
                 })
-            @canvas.drawText({
-                layer: true
-                name: @id + "_label"
-                group: "labels"
-                fromCenter: true
-                opacity: Connection.SEMITRANSPARENT
-                })
-            if text?
-                @setLabel(text, text_options)
-            else
-                @setLabel("")
 
         destroy: ->
             @canvas.removeLayer(@id)
-            @canvas.removeLayer(@id + "_label")
+            @label.destroy()
 
         getSrcX: -> @canvas.getLayer(@id).x1
         getSrcY: -> @canvas.getLayer(@id).y1
@@ -38,43 +23,22 @@
 
         setSrcX: (value)->
             @canvas.getLayer(@id).x1 = value
-            @update()
+            @labelUpdate()
         setSrcY: (value)->
             @canvas.getLayer(@id).y1 = value
-            @update()
+            @labelUpdate()
         setDestX: (value)->
             @canvas.getLayer(@id).x2 = value
-            @update()
+            @labelUpdate()
         setDestY: (value)->
             @canvas.getLayer(@id).y2 = value
-            @update()
-
-        update: ->
+            @labelUpdate()
+        labelUpdate: ->
             layer = @canvas.getLayer(@id)
-            label = @canvas.getLayer(@id + "_label")
-            label.x = (layer.x1 + layer.x2) / 2
-            label.y = (layer.y1 + layer.y2) / 2
-
-        setLabel: (text, options)->
-            layer = @canvas.getLayer(@id + "_label")
-            layer.text = text
-            if options?
-                layer.fillStyle = options.color if options.color?
-                layer.font = options.style if options.style?
-                layer.maxWidth = options.width if options.width?
-                if options.scaleOnMouseout
-                    layer.scale = options.scaleOnMouseout
-                    layer.mouseover = (_)-> _.scale = 1
-                    layer.mouseout = (_)-> _.scale = options.scaleOnMouseout
-            else
-                layer.fillStyle = "black"
-                layer.font = "20pt sans-serif"
-                layer.scale = 0.5
-                layer.mouseover = (_)-> _.scale = 1
-                layer.mouseout = (_)-> _.scale = 0.5
+            @label.setX((layer.x1 + layer.x2) / 2)
+            @label.setY((layer.y1 + layer.y2) / 2)
 
         appeal: ->
             @canvas.setLayer(@id, {opacity: 1})
-            @canvas.setLayer(@id + "_label", {opacity: 1})
-            @canvas.moveLayer(@id + "_label", @canvas.getLayers().length-1)
+            @label.appeal()
 

@@ -10,6 +10,7 @@ src_files = [
     "PhysicsEngine"
     "Vector"
     "Connection"
+    "Label"
     "Controller"
     "footer"
 ]
