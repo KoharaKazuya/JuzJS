@@ -67,3 +67,6 @@
                 layer.scale = 0.5
                 layer.mouseover = (_)-> _.scale = 1
                 layer.mouseout = (_)-> _.scale = 0.5
+
+        appeal: ->
+            @canvas.moveLayer(@id + "_label", @canvas.getLayers().length-1)
