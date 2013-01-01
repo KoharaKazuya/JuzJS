@@ -27,15 +27,7 @@
                 group: "nodes"
                 }
             default_events = {
-                mouseover: (layer)=>
-                    @canvas.setLayerGroup("nodes", {
-                        opacity: Node.SEMITRANSPARENT
-                        })
-                    layer.opacity = 1
-                    for id, v of @outConnections
-                        @canvas.setLayer(id, {opacity: 1})
-                    for id, v of @inConnections
-                        @canvas.setLayer(id, {opacity: 1})
+                mouseover: (layer)=> @appeal()
             }
             for event in @SUPPORTED_EVENTS
                 do (event)=>
@@ -104,3 +96,13 @@
                 @outConnections[other.id].connection.destroy()
                 delete @outConnections[other.id]
                 delete other.inConnections[this.id]
+
+        appeal: ->
+            @canvas.setLayerGroup("nodes", {
+                opacity: Node.SEMITRANSPARENT
+                })
+            @canvas.setLayer(@id, {opacity: 1})
+            for id, v of @outConnections
+                @canvas.setLayer(id, {opacity: 1})
+            for id, v of @inConnections
+                @canvas.setLayer(id, {opacity: 1})
