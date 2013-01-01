@@ -7,6 +7,9 @@ $(function() {
     var nodeList = [];
     for (var i=0; i<NODE_NUM; ++i) {
         nodeList[i] = controller.createNode({
+            mouseover: function(node, ex, ey) {
+                console.log(ex);
+            },
             dblclick: function(node, ex, ey) {
                 alert("(" + ex + "," + ey + ") at (" + node.getX() + "," + node.getY() + ")");
             }
