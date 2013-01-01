@@ -1,11 +1,14 @@
     # ノード間のつながり
     class Connection
 
+        @SEMITRANSPARENT: 0.3
+
         constructor: (@canvas, @id, sx, sy, dx, dy, @strength, text, text_options)->
             @canvas.drawLine({
                 layer: true
                 name: @id
                 index: 0
+                group: "connections"
                 strokeStyle: "black"
                 x1: sx
                 y1: sy
@@ -15,7 +18,9 @@
             @canvas.drawText({
                 layer: true
                 name: @id + "_label"
+                group: "labels"
                 fromCenter: true
+                opacity: Connection.SEMITRANSPARENT
                 })
             if text?
                 @setLabel(text, text_options)
@@ -69,4 +74,7 @@
                 layer.mouseout = (_)-> _.scale = 0.5
 
         appeal: ->
+            @canvas.setLayer(@id, {opacity: 1})
+            @canvas.setLayer(@id + "_label", {opacity: 1})
             @canvas.moveLayer(@id + "_label", @canvas.getLayers().length-1)
+

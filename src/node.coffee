@@ -99,6 +99,8 @@
 
         appeal: ->
             # 関連するコネクションの強調表示
+            @canvas.setLayerGroup("connections", {opacity: Connection.SEMITRANSPARENT})
+            @canvas.setLayerGroup("labels", {opacity: Connection.SEMITRANSPARENT})
             for id, v of @outConnections
                 v.connection.appeal()
             for id, v of @inConnections
