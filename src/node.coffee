@@ -80,6 +80,10 @@
                 @outConnections[other.id].connection.destroy()
                 delete @outConnections[other.id]
                 delete other.inConnections[this.id]
+            if (other.id of @inConnections) && (this.id of other.outConnections)
+                @inConnections[other.id].connection.destroy()
+                delete @inConnections[other.id]
+                delete other.outConnections[this.id]
 
         appeal: ->
             # 関連するノードの強調表示
