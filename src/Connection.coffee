@@ -1,7 +1,8 @@
     # ノード間のつながり
-    class Connection
+    class Connection extends JuzJSObject
 
-        constructor: (@canvas, @id, @strength, @label)->
+        constructor: (canvas, id, @strength, @label)->
+            super(canvas, id)
             @canvas.drawLine({
                 layer: true
                 name: @id
@@ -11,7 +12,7 @@
                 })
 
         destroy: ->
-            @canvas.removeLayer(@id)
+            super()
             @label.destroy()
 
         getSrcX: -> @canvas.getLayer(@id).x1
