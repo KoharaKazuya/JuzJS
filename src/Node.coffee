@@ -1,6 +1,7 @@
-    class Node
+    class Node extends JuzJSObject
 
-        constructor: (@canvas, @id, events)->
+        constructor: (canvas, id, events)->
+            super(canvas, id)
             pref = {
                 name: @id
                 type: "image"
@@ -24,7 +25,7 @@
             @inConnections = {}
 
         destroy: ->
-            @canvas.removeLayer(@id)
+            super
             for id, obj of @outConnections
                 obj.connection.destroy()
                 delete obj.node.inConnections[@id]
@@ -36,16 +37,10 @@
             layer = @canvas.getLayer(@id)
             layer.source = src
 
-        getX: ->
-            @canvas.getLayer(@id).x
-
-        getY: ->
-            @canvas.getLayer(@id).y
-
         setX: (new_x)->
             icon_width = @canvas.getLayer(@id).width / 2
             new_x = Math.min(Math.max(icon_width, new_x), @canvas.width()-icon_width)
-            @canvas.getLayer(@id).x = Math.round(new_x)
+            super(Math.round(new_x))
             for id, obj of @outConnections
                 obj.connection.setSrcX(new_x)
             for id, obj of @inConnections
@@ -54,7 +49,7 @@
         setY: (new_y)->
             icon_height = @canvas.getLayer(@id).height / 2
             new_y = Math.min(Math.max(icon_height, new_y), @canvas.height()-icon_height)
-            @canvas.getLayer(@id).y = Math.round(new_y)
+            super(Math.round(new_y))
             for id, obj of @outConnections
                 obj.connection.setSrcY(new_y)
             for id, obj of @inConnections

@@ -1,6 +1,7 @@
-    class Label
+    class Label extends JuzJSObject
 
-        constructor: (@canvas, @id, text, options)->
+        constructor: (canvas, id, text, options)->
+            super(canvas, id)
             pref = {
                 layer: true
                 name: @id
@@ -24,11 +25,6 @@
                 pref.mouseover = (_)-> _.scale = 1
                 pref.mouseout = (_)-> _.scale = 0.5
             @canvas.drawText(pref)
-
-        destroy: -> @canvas.removeLayer(@id)
-
-        setX: (new_x)-> @canvas.setLayer(@id, {x: new_x})
-        setY: (new_y)-> @canvas.setLayer(@id, {y: new_y})
 
         appeal: ->
             @canvas.setLayer(@id, {opacity: 1})
