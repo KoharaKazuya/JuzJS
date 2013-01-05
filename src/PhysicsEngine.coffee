@@ -1,12 +1,21 @@
     class PhysicsEngine
 
         update: (nodeList, canvas)->
-            forceList = for node in nodeList
+            if nodeList.length > Preference.MAX_UPDATABLE_NODES_NUM
+                updateList = []
+                list = [0...nodeList.length]
+                while updateList.length < Preference.MAX_UPDATABLE_NODES_NUM
+                    r = Math.floor(Math.random() * list.length)
+                    updateList.push nodeList[list[r]]
+                    list.splice(r, 1)
+            else
+                updateList = nodeList
+            forceList = for node in updateList
                 replusionVector = @computeReplusion(node, nodeList)
                 gravityVector   = @computeGravity(node, nodeList)
                 centerizeVector = @computeCenterize(node, canvas)
                 replusionVector.add(gravityVector).add(centerizeVector)
-            @updatePosition(nodeList, forceList)
+            @updatePosition(updateList, forceList)
 
         # 斥力を計算
         computeReplusion: (node, nodeList)->
