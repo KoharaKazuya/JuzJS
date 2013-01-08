@@ -30,16 +30,16 @@
         getDestY: -> @canvas.getLayer(@id).y2
 
         setSrcX: (value)->
-            @canvas.getLayer(@id).x1 = value
+            @canvas.setLayer(@id, {x1: value})
             @labelUpdate()
         setSrcY: (value)->
-            @canvas.getLayer(@id).y1 = value
+            @canvas.setLayer(@id, {y1: value})
             @labelUpdate()
         setDestX: (value)->
-            @canvas.getLayer(@id).x2 = value
+            @canvas.setLayer(@id, {x2: value})
             @labelUpdate()
         setDestY: (value)->
-            @canvas.getLayer(@id).y2 = value
+            @canvas.setLayer(@id, {y2: value})
             @labelUpdate()
         labelUpdate: ->
             layer = @canvas.getLayer(@id)
