@@ -19,6 +19,11 @@
             super()
             @label.destroy()
 
+        getX: -> throw "this function is disabled in Connection"
+        getY: -> throw "this function is disabled in Connection"
+        setX: (new_x)-> throw "this function is disabled in Connection"
+        setY: (new_y)-> throw "this function is disabled in Connection"
+
         getSrcX: -> @canvas.getLayer(@id).x1
         getSrcY: -> @canvas.getLayer(@id).y1
         getDestX: -> @canvas.getLayer(@id).x2
