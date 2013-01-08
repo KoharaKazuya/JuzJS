@@ -1,15 +1,21 @@
     class PhysicsEngine
 
-        REPLUSION_BASE: 1000000
-        GRAVITY_BASE: 0.01
-        UPDATE_SPEED: 0.02
-
-        update: (nodeList)->
-            forceList = for node in nodeList
+        update: (nodeList, canvas)->
+            if nodeList.length > Preference.MAX_UPDATABLE_NODES_NUM
+                updateList = []
+                list = [0...nodeList.length]
+                while updateList.length < Preference.MAX_UPDATABLE_NODES_NUM
+                    r = Math.floor(Math.random() * list.length)
+                    updateList.push nodeList[list[r]]
+                    list.splice(r, 1)
+            else
+                updateList = nodeList
+            forceList = for node in updateList
                 replusionVector = @computeReplusion(node, nodeList)
-                gravityVector = @computeGravity(node, nodeList)
-                replusionVector.add(gravityVector)
-            @updatePosition(nodeList, forceList)
+                gravityVector   = @computeGravity(node, nodeList)
+                centerizeVector = @computeCenterize(node, canvas)
+                replusionVector.add(gravityVector).add(centerizeVector)
+            @updatePosition(updateList, forceList)
 
         # 斥力を計算
         computeReplusion: (node, nodeList)->
@@ -19,9 +25,9 @@
                 vect = @point2Vector(node).sub(@point2Vector(other))
                 div = Math.pow(vect.getScalar(), 2)
                 if div == 0  # 0 での除算の防止
-                    v = v.add(Vector.polar2rect(@REPLUSION_BASE, 2 * Math.PI * Math.random()))
+                    v = v.add(Vector.polar2rect(Preference.REPLUSION_BASE, 2 * Math.PI * Math.random()))
                 else
-                    v = v.add(Vector.polar2rect(@REPLUSION_BASE / div, vect.getAngle()))
+                    v = v.add(Vector.polar2rect(Preference.REPLUSION_BASE / div, vect.getAngle()))
                 v = @limitedForce(v)
             v
 
@@ -33,9 +39,15 @@
                 g = node.getGravity(other)
                 continue if g == 0
                 vect = @point2Vector(other).sub(@point2Vector(node))
-                v = v.add(Vector.polar2rect(g * @GRAVITY_BASE * Math.pow(vect.getScalar(), 2), vect.getAngle()))
+                v = v.add(Vector.polar2rect(g * Preference.GRAVITY_BASE * Math.pow(vect.getScalar(), 2), vect.getAngle()))
                 v = @limitedForce(v)
             v
+
+        # 中央への引力を計算
+        computeCenterize: (node, canvas)->
+            center_x = canvas.attr("width") / 2
+            center_y = canvas.attr("height") / 2
+            new Vector(center_x, center_y).sub(@point2Vector(node))
 
         # 1 フレームでかかる力を制限する
         limitedForce: (vector)->
@@ -48,8 +60,8 @@
             for i in [0...nodeList.length]
                 node = nodeList[i]
                 force = forceList[i]
-                node.setX(node.getX() + force.x * @UPDATE_SPEED)
-                node.setY(node.getY() + force.y * @UPDATE_SPEED)
+                node.setX(node.getX() + force.x * Preference.UPDATE_SPEED)
+                node.setY(node.getY() + force.y * Preference.UPDATE_SPEED)
 
         # ノードの位置ベクトルを取得
         point2Vector: (node)->

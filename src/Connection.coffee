@@ -1,29 +1,28 @@
     # ノード間のつながり
-    class Connection
+    class Connection extends JuzJSObject
 
-        constructor: (@canvas, @id, sx, sy, dx, dy, @strength, text, text_options)->
+        constructor: (canvas, id, @strength, @label)->
+            super(canvas, id)
             @canvas.drawLine({
                 layer: true
                 name: @id
+                index: 0
+                group: "connections"
                 strokeStyle: "black"
-                x1: sx
-                y1: sy
-                x2: dx
-                y2: dy
                 })
-            @canvas.drawText({
-                layer: true
-                name: @id + "_label"
-                fromCenter: true
-                })
-            if text?
-                @setLabel(text, text_options)
-            else
-                @setLabel("")
+            @setSrcX(0)
+            @setSrcY(0)
+            @setDestX(0)
+            @setDestY(0)
 
         destroy: ->
-            @canvas.removeLayer(@id)
-            @canvas.removeLayer(@id + "_label")
+            super()
+            @label.destroy()
+
+        getX: -> throw "this function is disabled in Connection"
+        getY: -> throw "this function is disabled in Connection"
+        setX: (new_x)-> throw "this function is disabled in Connection"
+        setY: (new_y)-> throw "this function is disabled in Connection"
 
         getSrcX: -> @canvas.getLayer(@id).x1
         getSrcY: -> @canvas.getLayer(@id).y1
@@ -31,38 +30,23 @@
         getDestY: -> @canvas.getLayer(@id).y2
 
         setSrcX: (value)->
-            @canvas.getLayer(@id).x1 = value
-            @update()
+            @canvas.setLayer(@id, {x1: value})
+            @labelUpdate()
         setSrcY: (value)->
-            @canvas.getLayer(@id).y1 = value
-            @update()
+            @canvas.setLayer(@id, {y1: value})
+            @labelUpdate()
         setDestX: (value)->
-            @canvas.getLayer(@id).x2 = value
-            @update()
+            @canvas.setLayer(@id, {x2: value})
+            @labelUpdate()
         setDestY: (value)->
-            @canvas.getLayer(@id).y2 = value
-            @update()
-
-        update: ->
+            @canvas.setLayer(@id, {y2: value})
+            @labelUpdate()
+        labelUpdate: ->
             layer = @canvas.getLayer(@id)
-            label = @canvas.getLayer(@id + "_label")
-            label.x = (layer.x1 + layer.x2) / 2
-            label.y = (layer.y1 + layer.y2) / 2
+            @label.setX((layer.x1 + layer.x2) / 2)
+            @label.setY((layer.y1 + layer.y2) / 2)
 
-        setLabel: (text, options)->
-            layer = @canvas.getLayer(@id + "_label")
-            layer.text = text
-            if options?
-                layer.fillStyle = options.color if options.color?
-                layer.font = options.style if options.style?
-                layer.maxWidth = options.width if options.width?
-                if options.scaleOnMouseout
-                    layer.scale = options.scaleOnMouseout
-                    layer.mouseover = (_)-> _.scale = 1
-                    layer.mouseout = (_)-> _.scale = options.scaleOnMouseout
-            else
-                layer.fillStyle = "black"
-                layer.font = "20pt sans-serif"
-                layer.scale = 0.5
-                layer.mouseover = (_)-> _.scale = 1
-                layer.mouseout = (_)-> _.scale = 0.5
+        appeal: ->
+            @canvas.setLayer(@id, {opacity: 1})
+            @label.appeal()
+

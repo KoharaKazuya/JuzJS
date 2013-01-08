@@ -54,10 +54,8 @@ API
 - stop() : シミュレーションの停止
 
 ### Node
-- setIcon(*src*\[, *options*\]) : ノードに画像を設定
+- setIcon(*src*\) : ノードに画像を設定
     - *src* : 画像の URL
-    - *options* : 連想配列
-        - opacity : 不透明度を \[0, 1\] で指定
 - getX() : ノードの中心のX座標を取得
 - getY() : ノードの中心のY座標を取得
 - setX(*value*) : ノードの中心のX座標を設定
@@ -73,6 +71,8 @@ API
         - style : CSS の font で指定するのもと同じ。フォント
         - width : 一行の最大幅（あくまでも折り返しの目安で保証されない）
         - scaleOnMouseout : マウスが接続名上に**ない**ときの拡大率を \[0, 1\] で指定
+- disconnect(*other*) : 2ノード間の接続を切る
+    - *other* : ノード
 
 
 ### 使用例

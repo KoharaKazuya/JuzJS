@@ -18,12 +18,8 @@
 
         start: ->
             @updater = setInterval(=>
-                @engine.update(@nodeList)
+                @engine.update(@nodeList, @canvas)
                 @canvas.drawLayers()
             , 1000 / 60)
 
         stop: -> clearInterval(@updater)
-
-        setSimulationSpeed: (value)-> @engine.UPDATE_SPEED = value / 50.0
-
-        setBasicDistance: (value)-> @engine.REPLUSION_BASE = value * 1000000
