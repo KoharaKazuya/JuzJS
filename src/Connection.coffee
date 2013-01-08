@@ -10,6 +10,10 @@
                 group: "connections"
                 strokeStyle: "black"
                 })
+            @setSrcX(0)
+            @setSrcY(0)
+            @setDestX(0)
+            @setDestY(0)
 
         destroy: ->
             super()
