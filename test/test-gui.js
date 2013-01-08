@@ -2,7 +2,7 @@ $(function() {
 
     var controller = JuzJS("canvas");
 
-    var NODE_NUM = 500;
+    var NODE_NUM = 50;
 
     var nodeList = [];
     for (var i=0; i<NODE_NUM; ++i) {
