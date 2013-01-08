@@ -10,10 +10,19 @@
                 group: "connections"
                 strokeStyle: "black"
                 })
+            @setSrcX(0)
+            @setSrcY(0)
+            @setDestX(0)
+            @setDestY(0)
 
         destroy: ->
             super()
             @label.destroy()
+
+        getX: -> throw "this function is disabled in Connection"
+        getY: -> throw "this function is disabled in Connection"
+        setX: (new_x)-> throw "this function is disabled in Connection"
+        setY: (new_y)-> throw "this function is disabled in Connection"
 
         getSrcX: -> @canvas.getLayer(@id).x1
         getSrcY: -> @canvas.getLayer(@id).y1
@@ -21,16 +30,16 @@
         getDestY: -> @canvas.getLayer(@id).y2
 
         setSrcX: (value)->
-            @canvas.getLayer(@id).x1 = value
+            @canvas.setLayer(@id, {x1: value})
             @labelUpdate()
         setSrcY: (value)->
-            @canvas.getLayer(@id).y1 = value
+            @canvas.setLayer(@id, {y1: value})
             @labelUpdate()
         setDestX: (value)->
-            @canvas.getLayer(@id).x2 = value
+            @canvas.setLayer(@id, {x2: value})
             @labelUpdate()
         setDestY: (value)->
-            @canvas.getLayer(@id).y2 = value
+            @canvas.setLayer(@id, {y2: value})
             @labelUpdate()
         labelUpdate: ->
             layer = @canvas.getLayer(@id)

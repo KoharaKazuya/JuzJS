@@ -2,7 +2,7 @@ $(function() {
 
     var controller = JuzJS("canvas");
 
-    var NODE_NUM = 10;
+    var NODE_NUM = 500;
 
     var nodeList = [];
     for (var i=0; i<NODE_NUM; ++i) {
@@ -14,6 +14,8 @@ $(function() {
                 alert("(" + ex + "," + ey + ") at (" + node.getX() + "," + node.getY() + ")");
             }
         });
+        nodeList[i].setX($("canvas").attr('width') / 2);
+        nodeList[i].setY($("canvas").attr('height') / 2);
         nodeList[i].setIcon("https://si0.twimg.com/profile_images/2504370963/6u5qf6cl9jtwew6poxcj_normal.png");
     }
 
